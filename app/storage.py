@@ -73,19 +73,19 @@ class Storage():
     def update_data(self):
         file_path = os.path.join('..', 'data', 'latest_date.txt')
         with open(file_path, 'r') as date_file:
-            latest_date = date_file.read()
-        if latest_date == str(datetime.now().date()):
+            latest_date = datetime.strptime(date_file.read(),
+                                            '%Y-%m-%d').date()
+        if latest_date == datetime.now().date():
             return None
-        print('here')
+        load_path_json = os.path.join('..', 'data', 'update', 'json')
+        load_path_csv = os.path.join('..', 'data', 'update', 'csv')
         save_path = os.path.join('..', 'data', 'update')
-        for folder in os.listdir(save_path):
-            os.remove(os.path.join(save_path, folder))
         download.get_rp5_weather_datasets(save_path, latest_date,
                                           datetime.now().date())
         download.get_wwo_weather_datasets(save_path, latest_date,
                                           datetime.now().date())
-        self.upload_csv_data_to_database(save_path)
-        self.upload_json_data_to_database(save_path)
+        self.upload_csv_data_to_database(load_path_csv)
+        self.upload_json_data_to_database(load_path_json)
 
         with open(file_path, 'w') as date_file:
             date_file.write(str(datetime.now().date()))
@@ -162,24 +162,16 @@ class Storage():
 
 
 if __name__ == '__main__':
-    dt_info = {'database': 'dbweather',
-               'user': 'postgres',
-               'password': '123qwe',
-               'host': 'localhost',
-               'path': 'data'}
+    with open('db_config.json', 'r') as info:
+        dt_info = json.load(info)
     json_path = os.path.join('..', 'data', 'json')
     csv_path = os.path.join('..', 'data', 'csv')
 
     db_weather = Storage(dt_info)
-    #db_weather.upload_json_data_to_database(json_path)
-    #db_weather.upload_csv_data_to_database(csv_path)
+    with open('db_script.sql', 'r') as table:
+        db_weather._cursor.execute(table.read())
+        db_weather._connect.commit()
+    db_weather.upload_json_data_to_database(json_path)
+    db_weather.upload_csv_data_to_database(csv_path)
     db_weather.update_data()
-
-    test_start_date = datetime(2010, 1, 1).date()
-    test_end_date = datetime(2014, 12, 31).date()
-    city = 'London'
-    data = test_start_date, test_end_date, city
-    info = db_weather.get_client_request(data)
-    for elem in info:
-        print(elem, '=', info[elem])
 

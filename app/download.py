@@ -49,8 +49,7 @@ def load_rp5_weather_datasets(input_data, start_date, end_date):
             input_data['form_data']['wmo_id'] = input_data['cities'][city]
             save_path = os.path.join(input_data['data_path'], city)
 
-            if (input_data['form_data']['wmo_id']
-                not in os.listdir(path=input_data['data_path'])):
+            if not os.path.exists(save_path):
                 os.mkdir(save_path)
 
             for year in range(start_date.year, end_date.year + 1):
@@ -110,12 +109,13 @@ def load_wwo_weather_datasets(input_data, start_date, end_date):
         dataset = []
         save_path = os.path.join(input_data['data_path'], city)
 
-        os.mkdir(save_path)
+        if not os.path.exists(save_path):
+            os.mkdir(save_path)
 
         while True:
-            if local_start_date.date() > end_date:
+            if local_start_date > end_date:
                 break
-            if local_end_date.date() > end_date:
+            if local_end_date > end_date:
                 local_end_date = end_date
 
             input_data['form_data']['date'] = str(local_start_date)
