@@ -1,6 +1,7 @@
 To start working with the application run (no Docker):
   1. run storage.py
   2. run app.py
+  3. go to http://127.0.0.1:5000/
 
 
 The database contains data from 01.01.2010 to 15.01.2019
