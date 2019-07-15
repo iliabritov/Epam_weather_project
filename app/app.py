@@ -8,7 +8,6 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 
-
 @app.route('/')
 @app.route('/index', methods=['POST', 'GET'])
 def main():
@@ -36,7 +35,6 @@ def main():
         post_var = [('city_name', 'Saint-Pet.'),
                     ('start_data', 'today1'),
                     ('end_data', 'today2')]
-
         test_result = {
             'min_temp': '',
             'average_temp': '',
@@ -48,6 +46,7 @@ def main():
             'wind_direction': '',
             'temp_by_years': None
         }
+        db_weather.update_data()
         return render_template('index.html', title='Home',
                                result=test_result, post_var=post_var)
 

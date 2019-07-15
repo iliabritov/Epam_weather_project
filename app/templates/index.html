@@ -50,17 +50,22 @@
 		<td colspan="2"><b> Температура: </td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Минимальная температура за период</td>
-		<td><center> {{ result.min_temp }} C<sup>0</sup> </td>
+		<td><p style="margin-left: 40px"> Минимальная температура за период (C<sup>0</sup>)</td>
+		<td><center> {{ result.min_temp }} </td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Средняя температура за период: </td>
-		<td><center> {{ result.average_temp }} C<sup>0</sup> </td>
+		<td><p style="margin-left: 40px"> Средняя температура за период (C<sup>0</sup>): </td>
+		<td><center> {{ result.average_temp }} </td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Максимальная температура: </td>
-		<td><center> {{ result.max_temp }} C<sup>0</sup> </td>
+		<td><p style="margin-left: 40px"> Максимальная температура (C<sup>0</sup>): </td>
+		<td><center> {{ result.max_temp }}  </td>
 	</tr>
+	<tr>
+		<td><p style="margin-left: 40px"> Наиболее температура была близка: </td>
+		<td><center> not calculated  </td>
+	</tr>
+	
 	
 	{% if result.temp_by_years %}
 		<tr> 
@@ -69,7 +74,7 @@
 		{% for year in result.temp_by_years %}
 		<tr>
 			<td><p style="margin-left: 100px"> {{ year[0] }} год </td>
-			<td><center> min - {{ year[2] }} C<sup>0</sup>, max - {{ year[1]}} C<sup>0</sup> </td>
+			<td><center> min {{ year[2] }}, max {{ year[1]}} </td>
 		</tr>
 		{% endfor %}	
 	{% endif %}
@@ -78,12 +83,12 @@
 		<td colspan="2"><b> Осадки: </td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Без осадков: </td>
-		<td><center> {{ result.no_prec }} % </td>
+		<td><p style="margin-left: 40px"> Без осадков (%): </td>
+		<td><center> {{ result.no_prec }} </td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> С осадками: </td>
-		<td><center> {{ result.prec }} % </td>
+		<td><p style="margin-left: 40px"> С осадками (%): </td>
+		<td><center> {{ result.prec }} </td>
 	</tr>
 	<tr>
 		<td><p style="margin-left: 40px"> Наиболее часто встречающиеся осадки </td>
@@ -93,8 +98,8 @@
 		<td colspan="2"><b> Ветер: </td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Средняя скорость: </td>
-		<td><center> {{ result.wind_speed }} м/сек </td>
+		<td><p style="margin-left: 40px"> Средняя скорость (м/сек): </td>
+		<td><center> {{ result.wind_speed }}  </td>
 	</tr>
 	<tr>
 		<td><p style="margin-left: 40px"> Направление ветра: </td>

@@ -3,15 +3,7 @@ import json
 import psycopg2
 import os
 from datetime import datetime
-
-
-def decorator(func):
-    def wrapper(*args, **kwargs):
-        start_time = datetime.now().time()
-        func(*args, **kwargs)
-        end_time = datetime.now().time()
-        print('time -', start_time, end_time)
-    return wrapper
+import download
 
 
 class Storage():
@@ -26,7 +18,6 @@ class Storage():
     def __del__(self):
         self._connect.close()
 
-    @decorator
     def upload_json_data_to_database(self, path_to_data_folder):
 
         for city in os.listdir(path_to_data_folder):
@@ -45,7 +36,6 @@ class Storage():
                             day['hourly'][0]['winddir16Point'])
                         self.upload_data(sql_data)
 
-    @decorator
     def upload_csv_data_to_database(self, path_to_data_folder):
 
         for city in os.listdir(path_to_data_folder):
@@ -80,11 +70,25 @@ class Storage():
         VALUES (%s,%s,%s,%s,%s,%s,%s,%s);""", sql_data)
         self._connect.commit()
 
-    def get_data(self):
-        self._cursor.execute("SELECT * FROM weather LIMIT 20;")
-        result = self._cursor.fetchall()
-        for i in result:
-            print(i)
+    def update_data(self):
+        file_path = os.path.join('..', 'data', 'latest_date.txt')
+        with open(file_path, 'r') as date_file:
+            latest_date = date_file.read()
+        if latest_date == str(datetime.now().date()):
+            return None
+        print('here')
+        save_path = os.path.join('..', 'data', 'update')
+        for folder in os.listdir(save_path):
+            os.remove(os.path.join(save_path, folder))
+        download.get_rp5_weather_datasets(save_path, latest_date,
+                                          datetime.now().date())
+        download.get_wwo_weather_datasets(save_path, latest_date,
+                                          datetime.now().date())
+        self.upload_csv_data_to_database(save_path)
+        self.upload_json_data_to_database(save_path)
+
+        with open(file_path, 'w') as date_file:
+            date_file.write(str(datetime.now().date()))
 
     def get_client_request(self, client_data):
         client_info = {}
@@ -169,6 +173,7 @@ if __name__ == '__main__':
     db_weather = Storage(dt_info)
     #db_weather.upload_json_data_to_database(json_path)
     #db_weather.upload_csv_data_to_database(csv_path)
+    db_weather.update_data()
 
     test_start_date = datetime(2010, 1, 1).date()
     test_end_date = datetime(2014, 12, 31).date()
