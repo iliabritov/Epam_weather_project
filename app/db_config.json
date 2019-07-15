@@ -1,0 +1,7 @@
+{
+"database": "dbweather",
+"user": "postgres",
+"password": "123qwe",
+"host": "localhost",
+"path": "data"
+}
