@@ -1,4 +1,6 @@
 ### What is it?
+
+###### Description
 This is a simple educational project on python3 that allows you to collect weather data and get weather statistics for a selected city.
 
 - **Input data:** start data, finish data, city
@@ -30,9 +32,9 @@ This is a simple educational project on python3 that allows you to collect weath
 
 
 ###### Date format:
-dd.mm.yyyy
+  dd.mm.yyyy
 ###### Example:
-23.03.2013
+  23.03.2013
 
 ### List of avaible cities:
 - Samara 
