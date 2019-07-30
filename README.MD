@@ -9,8 +9,8 @@ This is a simple educational project on python3 that allows you to collect weath
 
 ### How to run
 ###### Docker
-  1. Download project using git clone 
-  > https://github.com/iliabritov/Epam_weather_project
+  1. Download project using
+  > git clone https://github.com/iliabritov/Epam_weather_project
   2. Be sure that you have Docker :) (download and install from [here](https://www.docker.com/get-started))
   3. Run project 
   > docker-compose up -d
