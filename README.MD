@@ -13,12 +13,12 @@ To start working with the application run (no Docker):
 - www.worldweatheronline.com
 
 
-Date format: 
-> dd.mm.yyyy
-Example:
-> 23.03.2013
+###### Date format:
+dd.mm.yyyy
+###### Example:
+23.03.2013
 
-#### List of avaible cities:
+### List of avaible cities:
 - Samara 
 - Moscow
 - Kazan
