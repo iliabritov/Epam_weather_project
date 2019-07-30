@@ -1,6 +1,12 @@
 ### What is it?
 This is a simple educational project on python3 that allows you to collect weather data and get weather statistics for a selected city.
 
+- **Input data:** start data, finish data, city
+- **Output data:**
+  - min, max, average temp
+  - precipitation info (most frequent, procent of days)
+  - wind speed and direction
+
 ###### Used tools and technologies
 - Python3
 - Flask
