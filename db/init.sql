@@ -1,3 +1,11 @@
+CREATE USER docker;
+
+CREATE DATABASE dbweather;
+
+GRANT ALL PRIVILEGES ON DATABASE dbweather TO docker;
+
+\c dbweather;
+
 DROP TABLE IF EXISTS weather; 
 CREATE TABLE weather (
 	id SERIAL PRIMARY KEY,

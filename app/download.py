@@ -158,5 +158,5 @@ if __name__ == '__main__':
     start_dt = datetime(2010, 1, 1).date()
     end_dt = datetime.now().date()
     #get_wwo_weather_datasets('data', start_dt, end_dt)
-    #get_rp5_weather_datasets('data', start_dt, end_dt)
+    get_rp5_weather_datasets('.././data', start_dt, end_dt)
     print('Done!')

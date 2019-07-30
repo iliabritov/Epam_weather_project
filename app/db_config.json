@@ -1,7 +1,7 @@
 {
 "database": "dbweather",
 "user": "postgres",
-"password": "123qwe",
-"host": "localhost",
+"password": "postgres",
+"host": "weather_db",
 "path": "data"
 }

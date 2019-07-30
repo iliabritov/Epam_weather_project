@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime
 from flask import Flask, request, render_template
 import storage
@@ -6,6 +7,17 @@ import storage
 
 app = Flask(__name__)
 app.config.from_object('config')
+
+
+@app.before_first_request
+def loading_data():
+    with open('db_config.json', 'r') as info:
+        dt_info = json.load(info)
+    print('Server downloading data to database...')
+    json_path = os.path.join('..', 'data', 'json')
+    db_weather = storage.Storage(dt_info)
+    db_weather.upload_json_data_to_database(json_path)
+    print('Downloading complite!')
 
 
 @app.route('/')
@@ -46,10 +58,9 @@ def main():
             'wind_direction': '',
             'temp_by_years': None
         }
-        db_weather.update_data()
         return render_template('index.html', title='Home',
                                result=test_result, post_var=post_var)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host='0.0.0.0', port=5000)
