@@ -1,7 +1,7 @@
 ### What is it?
 
 ###### Description
-This is a simple educational project on python3 that allows you to collect weather data and get weather statistics for a selected city.
+This is a simple educational project (from Epam training center) on python3 that allows you to collect weather data and get weather statistics for a selected city.
 
 - **Input data:** start data, finish data, city
 - **Output data:**
@@ -19,6 +19,8 @@ This is a simple educational project on python3 that allows you to collect weath
 ###### Docker
   1. Download project using
   > git clone https://github.com/iliabritov/Epam_weather_project
+  2. Go to clone folder
+  > cd Epam_weather_project
   2. Be sure that you have Docker :) (download and install from [here](https://www.docker.com/get-started))
   3. Run project
   > docker-compose up -d
