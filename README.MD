@@ -7,26 +7,27 @@ To start working with the application run (no Docker):
 
 
 The database contains data from 01.01.2010 to 15.01.2019
-Data sources: www.rp5.ru
-	      www.worldweatheronline.com
+Data sources: 
+	- www.rp5.ru
+	- www.worldweatheronline.com
 
 Date format: dd.mm.yyyy
 Example: 23.03.2013
 
 List of avaible cities:
-Samara 
-Moscow
-Kazan
-Saint Petersburg
-Vologda
-Kirov
-Perm
-Omsk
-Irkutsk
-Krasnoyarsk
-London
-Nur-Sultan
-Minsk
-Warsaw
-Berlin
-Canberra
+- Samara 
+- Moscow
+- Kazan
+- Saint Petersburg
+- Vologda
+- Kirov
+- Perm
+- Omsk
+- Irkutsk
+- Krasnoyarsk
+- London
+- Nur-Sultan
+- Minsk
+- Warsaw
+- Berlin
+- Canberra
