@@ -21,6 +21,8 @@ This is a simple educational project (from Epam training center) on python3 that
   > git clone https://github.com/iliabritov/Epam_weather_project
   2. Go to clone folder
   > cd Epam_weather_project
+  3. Download data. Run next command to download data:
+  > python3 app/download.py 
   2. Be sure that you have Docker :) (download and install from [here](https://www.docker.com/get-started))
   3. Run project
   > docker-compose up -d
