@@ -19,13 +19,14 @@ class Storage():
         self._connect.close()
 
     def upload_json_data_to_database(self, path_to_data_folder):
-
+	""" Method preparing data from json-files for uploading to database """
         for city in os.listdir(path_to_data_folder):
             file_path = os.path.join(path_to_data_folder, city, 'data.json')
             with open(file_path, 'r') as j_file:
                 j_data = json.load(j_file)
                 for mouth in j_data:
                     for day in j_data[mouth]:
+			# format data for uploaing
                         sql_data = ('world online weather',
                             city,
                             datetime.strptime(day['date'], '%Y-%m-%d').date(),
@@ -34,21 +35,24 @@ class Storage():
                             day['hourly'][0]['precipMM'],
                             day['hourly'][0]['windspeedKmph'],
                             day['hourly'][0]['winddir16Point'])
+			# upload data to database
                         self.upload_data(sql_data)
 
     def upload_csv_data_to_database(self, path_to_data_folder):
-
+	""" Method preparing data from csv-files for uploading to database """
         for city in os.listdir(path_to_data_folder):
             folder = os.path.join(path_to_data_folder, city)
             for year in os.listdir(folder):
-                with open(os.path.join(folder, year), 'r') as csv_file:
+                with open(os.path.join(folder, year), 'r', 'cp1251') as csv_file:
                     reader = csv.reader(csv_file, delimiter=';')
                     n = 0
                     for row in reader:
+			# skip header when reading file
                         if n < 9 or n % 8 != 0:
                             n += 1
                             continue
                         n += 1
+			# format data for uploaing  
                         sql_data = ('rp5',
                                     city,
                                     datetime.strptime(
@@ -59,9 +63,11 @@ class Storage():
                                     row[7] if 5 > len(row[7]) >= 3 else 0,
                                     row[6]
                                     )
+			# upload data to database
                         self.upload_data(sql_data)
 
     def upload_data(self, sql_data):
+	""" Method upload data to database """
         self._cursor.execute("""INSERT INTO weather 
                             (data_base, city,
                             date_day, temp,
@@ -71,6 +77,7 @@ class Storage():
         self._connect.commit()
 
     def update_data(self):
+	""" Method downloads new data and uploads it to database """
         file_path = os.path.join('..', 'data', 'latest_date.txt')
         with open(file_path, 'r') as date_file:
             latest_date = datetime.strptime(date_file.read(),
@@ -91,6 +98,7 @@ class Storage():
             date_file.write(str(datetime.now().date()))
 
     def get_client_request(self, client_data):
+	""" Method make request to database and return info for client"""
         client_info = {}
         requests = {'max_temp': """SELECT MAX(temp) 
                         FROM weather 
@@ -168,10 +176,10 @@ if __name__ == '__main__':
     csv_path = os.path.join('..', 'data', 'csv')
 
     db_weather = Storage(dt_info)
-    with open('db_script.sql', 'r') as table:
-        db_weather._cursor.execute(table.read())
-        db_weather._connect.commit()
+    #with open('db_script.sql', 'r') as table:
+    #    db_weather._cursor.execute(table.read())
+    #    db_weather._connect.commit()
     db_weather.upload_json_data_to_database(json_path)
     db_weather.upload_csv_data_to_database(csv_path)
-    db_weather.update_data()
+    #db_weather.update_data()
 
