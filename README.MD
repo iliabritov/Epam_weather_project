@@ -21,12 +21,12 @@ This is a simple educational project (from Epam training center) on python3 that
   > git clone https://github.com/iliabritov/Epam_weather_project
   2. Go to clone folder
   > cd Epam_weather_project
-  3. Download data. Run next command to download data:
+  3. Download data. Run next command to download data (need to wait - data is loaded ~ 2 mins):
   > python3 app/download.py 
-  2. Be sure that you have Docker :) (download and install from [here](https://www.docker.com/get-started))
-  3. Run project
+  4. Be sure that you have Docker :) (download and install from [here](https://www.docker.com/get-started))
+  5. Run project
   > docker-compose up -d
-  4. go to http://localhost:5000/ (you need to wait - the data is loaded on average 1.5 - 2 minutes)
+  6. go to http://localhost:5000/ (you need to wait - the data is loaded on average 1.5 - 2 mins)
 
 ### The database contains data from **01.01.2010** to **15.01.2019**
 
