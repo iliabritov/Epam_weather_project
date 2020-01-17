@@ -1,110 +1,115 @@
 <html>
   <head>
 	<title> {{title}} - weatherblog </title>
-	<style>
-		table {
-			margin: auto;
-			{
-	</style>
   </head>
   <body>
-  
+
+  	<div class="input">
 	<form action="http://localhost:5000/index" method="POST">
-		<table border="0" width="40%" cellpadding="2">
+		<table>
+		<tr>
+			<td class="headers"> 
+				Начало периода
+			</td>
+			<td class="headers">
+				Конец периода
+			</td>
+			<td class="headers">
+				Город
+			</td>
+		</tr>
 		<tr>
 			<td>
-			<p>
-				<label for="start_data"><b><center>Начало периода</center></label>
-				<center><input type="text" name="start_data"/></center>
-			</p>
+				<input type="text" name="start_data"/>
 			</td>
 			<td>
-			<p>
-				<label for="end_data"><b><center>Конец периода</center></label>
-				<center><input type="text" name="end_data"/></center>
-			</p>
+				<input type="text" name="end_data"/>
 			</td>
 			<td>
-			<p>
-				<label for="city_name"><b><center>Город</center></label>
-				<center><input type="text" name="city_name"/></center>
-			</p>
+				<input type="text" name="city_name"/>
 			</td>
 			<tr>
 			<td colspan="3">
-			<p>
-				<center><input type="submit" value="Получить статистику"/></center>
-			</p>
+				<input class="button" type="submit" value="Получить статистику"/>
 			</td>
 			</tr>
 		</tr>
 		</table>
 	</form>
+	</div>
 	
-	<table border="1" width="60%" cellpadding="2">
+	<div class="output">
+	<table>
 	<caption> <h2> Результат запроса </h2> </caption>
 	<tr>
-		<td colspan="2"><b>В городе: {{post_var.city_name}} с {{post_var.start_data}} по  {{post_var.end_data}} </td>
+		<td class="headers" colspan="2">В городе: {{post_var.city_name}} с {{post_var.start_data}} по  {{post_var.end_data}} </td>
 	</tr>
 	<tr>
-		<td colspan="2"><b> Температура: </td>
+		<td class="headers" colspan="2">Температура</td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Минимальная температура за период (C<sup>0</sup>)</td>
-		<td><center> {{ result.min_temp }} </td>
+		<td>Минимальная температура за период (C<sup>0</sup>)</td>
+		<td><div class="result"> {{ result.min_temp }} </div></td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Средняя температура за период (C<sup>0</sup>): </td>
-		<td><center> {{ result.average_temp }} </td>
+		<td>Средняя температура за период (C<sup>0</sup>):</td>
+		<td><div class="result"> {{ result.average_temp }} </div></td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Максимальная температура (C<sup>0</sup>): </td>
-		<td><center> {{ result.max_temp }}  </td>
+		<td>Максимальная температура (C<sup>0</sup>):</td>
+		<td><div class="result"> {{ result.max_temp }} </div></td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Наиболее температура была близка: </td>
-		<td><center> not calculated  </td>
+		<td>Наиболее температура была близка:</td>
+		<td><div class="result"> not calculated </div></td>
 	</tr>
 	
 	
 	{% if result.temp_by_years %}
 		<tr> 
-			<td colspan="2"><p style="margin-left: 40px"> Показатели температуры по годам: </td>
+			<td class="headers" colspan="2">Показатели температуры по годам</td>
 		</tr>
 		{% for year in result.temp_by_years %}
 		<tr>
-			<td><p style="margin-left: 100px"> {{ year[0] }} год </td>
-			<td><center> min {{ year[2] }}, max {{ year[1]}} </td>
+			<td> {{ year[0] }} год </td>
+			<td><div class="result"> min {{ year[2] }}, max {{ year[1]}} </div></td>
 		</tr>
 		{% endfor %}	
 	{% endif %}
 	
 	<tr>
-		<td colspan="2"><b> Осадки: </td>
+		<td class="headers" colspan="2">Осадки</td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Без осадков (%): </td>
-		<td><center> {{ result.no_prec }} </td>
+		<td>Без осадков (%)</td>
+		<td><div class="result"> {{ result.no_prec }} </div>></td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> С осадками (%): </td>
-		<td><center> {{ result.prec }} </td>
+		<td>С осадками (%)</td>
+		<td><div class="result"> {{ result.prec }} </div></td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Наиболее часто встречающиеся осадки </td>
-		<td><center> {{ result.frec_type_prec }} </td>
+		<td>Наиболее часто встречающиеся осадки</td>
+		<td><div class="result"> {{ result.frec_type_prec }} </div></td>
 	</tr>
 	<tr>
-		<td colspan="2"><b> Ветер: </td>
+		<td class="headers" colspan="2">Ветер:</td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Средняя скорость (м/сек): </td>
-		<td><center> {{ result.wind_speed }}  </td>
+		<td>Средняя скорость (м/сек)</td>
+		<td><div class="result"> {{ result.wind_speed }}  </div></td>
 	</tr>
 	<tr>
-		<td><p style="margin-left: 40px"> Направление ветра: </td>
-		<td><center> {{ result.wind_direction }} </td>
+		<td>Направление ветра</td>
+		<td><div class="result"> {{ result.wind_direction }} </div></td>
 	</tr>
 	</table>  
+	</div>
+
+
+
   </body>
 </html>
+
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">

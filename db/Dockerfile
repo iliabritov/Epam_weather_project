@@ -1,4 +1,4 @@
-FROM postgres:latest
+FROM postgres:11
 
 COPY init.sql /docker-entrypoint-initdb.d/init.sql
 #COPY db_script.sql /docker-entrypoint-initdb.d/02_db_script.sql
