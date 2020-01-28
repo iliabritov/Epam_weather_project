@@ -19,23 +19,27 @@ def loading_data():
     print('Downloading complite!')
 """
 
+
 @pages.route("/")
 @pages.route("/home")
-@pages.route('/index', methods=['POST', "GET"])
+@pages.route("/index", methods=["POST", "GET"])
 def get_weather_page():
-    post_var = [('city_name', 'Saint-Pet.'),
-                ('start_data', 'today1'),
-                ('end_data', 'today2')]
-    test_result = {
-        'min_temp': '',
-        'average_temp': '',
-        'max_temp': '',
-        'no_prec': '',
-        'prec': '',
-        'frec_type_prec': '',
-        'wind_speed': '',
-        'wind_direction': '',
-        'temp_by_years': None
+    post_var = {
+        "city_name": "Saint-Pet.",
+        "start_data": "10.10.2015",
+        "end_data": "10.10.2018",
     }
-    return render_template('index.html', title='Home',
-                           result=test_result, post_var=post_var)
+    test_result = {
+        "min_temp": "",
+        "average_temp": "",
+        "max_temp": "",
+        "no_prec": "",
+        "prec": "",
+        "frec_type_prec": "",
+        "wind_speed": "",
+        "wind_direction": "",
+        "temp_by_years": None,
+    }
+    return render_template(
+        "index.html", title="Home", result=test_result, post_var=post_var
+    )
