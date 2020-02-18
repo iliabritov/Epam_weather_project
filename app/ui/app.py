@@ -1,0 +1,21 @@
+import json
+import os
+from datetime import datetime
+from flask import Flask, request, render_template
+from ui.views import pages, BASE_DATE, DOWNLOAD_CONFIG, DB_CONFIG
+from ui.instr.prepare_data import DataUpdater
+
+
+app = Flask(__name__)
+app.register_blueprint(pages)
+
+
+@app.before_first_request
+def update_data_for_service():
+    updater = DataUpdater(BASE_DATE, DOWNLOAD_CONFIG, DB_CONFIG)
+    updater.fetch_db_dates()
+    updater.update_db()
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

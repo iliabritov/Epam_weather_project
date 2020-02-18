@@ -20,10 +20,10 @@
 		</tr>
 		<tr>
 			<td>
-				<input type="text" name="start_data"/>
+				<input type="text" name="start_date"/>
 			</td>
 			<td>
-				<input type="text" name="end_data"/>
+				<input type="text" name="end_date"/>
 			</td>
 			<td>
 				<input type="text" name="city_name"/>
@@ -42,7 +42,7 @@
 	<table>
 	<caption> <h2> Результат запроса </h2> </caption>
 	<tr>
-		<td class="headers" colspan="2">В городе: {{post_var.city_name}} с {{post_var.start_data}} по  {{post_var.end_data}} </td>
+		<td class="headers" colspan="2">В городе: {{post_var.city_name}} с {{post_var.start_date}} по  {{post_var.end_date}} </td>
 	</tr>
 	<tr>
 		<td class="headers" colspan="2">Температура</td>
@@ -59,11 +59,6 @@
 		<td>Максимальная температура (C<sup>0</sup>):</td>
 		<td><div class="result"> {{ result.max_temp }} </div></td>
 	</tr>
-	<tr>
-		<td>Наиболее температура была близка:</td>
-		<td><div class="result"> not calculated </div></td>
-	</tr>
-	
 	
 	{% if result.temp_by_years %}
 		<tr> 

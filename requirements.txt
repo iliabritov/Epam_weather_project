@@ -1,4 +1,0 @@
-requests
-flask
-psycopg2-binary
-pytest

@@ -27,7 +27,7 @@ class DbDriver:
         self._session = session_maker()
 
     def get_config():
-        parser = Parser()
+        parser = ConfigParser()
         with self.config_path.open() as conf:
             parser.read_file(conf)
         return parser[self.config_name]
@@ -42,6 +42,12 @@ class DbDriver:
     def delete(self, data_obj):
         self._session.delete(data_obj)
         self._session.commit()
+
+    def make_query(self, data_obj):
+        self.query = self._session.query(data_obj)
+
+    def __del__(self):
+        self._session.close()
 
 
 class Weather(Base):
