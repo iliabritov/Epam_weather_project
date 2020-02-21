@@ -16,9 +16,8 @@ DOWNLOAD_CONFIG = Path("./configs/download.ini")
 BASE_DATE = datetime(2019, 1, 1)
 
 
-@pages.route("/")
-@pages.route("/home")
-@pages.route("/index", methods=["POST", "GET"])
+@pages.route("/", methods=["POST", "GET"])
+@pages.route("/home", methods=["POST", "GET"])
 def get_weather_page():
     weather_storage = WeatherStorage(DB_CONFIG)
 

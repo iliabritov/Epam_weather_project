@@ -24,9 +24,9 @@ class CsvReformator:
     def clean_lines(self):
         with open(self.path, "r", encoding="utf-8") as dataset:
             reader = csv.reader(dataset, delimiter=";")
-            n = 0
+            n = 1
             for row in reader:
-                if (n < 9) or (n % 8 != 0):
+                if (n < 8):
                     n += 1
                     continue
                 yield self.reformat_data(row)
@@ -57,5 +57,5 @@ def form_query_data(input_data=None):
             input_data["city_name"],
         ]
     else:
-        query_data = [datetime.now() - timedelta(days=7), datetime.now(), "Irkutsk"]
+        query_data = [datetime.now().date() - timedelta(days=7), datetime.now().date(), "Irkutsk"]
     return query_data
