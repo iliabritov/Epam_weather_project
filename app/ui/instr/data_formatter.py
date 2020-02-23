@@ -42,9 +42,9 @@ def datetime_to_str(input_date):
 
 def form_post_var(input_data):
     post_var = {
-        "start_date": datetime_to_str(input_data[0]),
-        "end_date": datetime_to_str(input_data[1]),
-        "city_name": input_data[2],
+        "city_name": input_data[0],
+        "start_date": datetime_to_str(input_data[1]),
+        "end_date": datetime_to_str(input_data[2]),
     }
     return post_var
 
@@ -52,10 +52,10 @@ def form_post_var(input_data):
 def form_query_data(input_data=None):
     if input_data:
         query_data = [
+            input_data["city_name"],
             str_to_datetime(input_data["start_date"]),
             str_to_datetime(input_data["end_date"]),
-            input_data["city_name"],
         ]
     else:
-        query_data = [datetime.now().date() - timedelta(days=7), datetime.now().date(), "Irkutsk"]
+        query_data = ["Irkutsk", datetime.now().date() - timedelta(days=7), datetime.now().date()]
     return query_data

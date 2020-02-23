@@ -15,22 +15,22 @@ class DbDriver:
         self._config = self.get_config()
         self.make_session()
 
-    def make_session():
-        username = self._config["username"]
+    def make_session(self):
+        username = self._config["user"]
         password = self._config["password"]
         host = self._config["host"]
-        db_name = self._config["db_name"]
+        db_name = self._config["database"]
 
         connect_path = f"postgresql://{username}:{password}@{host}/{db_name}"
         engine = sqlalchemy.create_engine(connect_path)
-        session_maker = sqlalchemy.orm.session_maker(bind=engine)
+        session_maker = sqlalchemy.orm.sessionmaker(bind=engine)
         self._session = session_maker()
 
-    def get_config():
+    def get_config(self):
         parser = ConfigParser()
-        with self.config_path.open() as conf:
+        with self._config_path.open() as conf:
             parser.read_file(conf)
-        return parser[self.config_name]
+        return parser[self._config_name]
 
     def add(self, data_obj):
         self._session.add(data_obj)
@@ -50,7 +50,7 @@ class DbDriver:
         self._session.close()
 
 
-class Weather(Base):
+class WeatherDate(Base):
     __tablename__ = "weather"
     id = Column(Integer, primary_key=True)
     data_base = Column(String)
