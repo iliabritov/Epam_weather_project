@@ -4,7 +4,6 @@ import requests
 from pathlib import Path
 from configparser import ConfigParser
 from io import BytesIO
-from datetime import datetime, timedelta
 
 
 class LoaderRp5:
@@ -53,7 +52,6 @@ class LoaderRp5:
         ).text
         link = r[r.find("href=") + 5 : r.find(">Download")].replace("../", "")
         dataset = gzip.GzipFile(fileobj=BytesIO(requests.get(link).content))
-
         with open(file_path, "wb") as csv_f:
             csv_f.write(dataset.read())
 

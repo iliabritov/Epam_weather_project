@@ -1,10 +1,5 @@
-import csv
-import json
 import psycopg2
-import os
 from configparser import ConfigParser
-from pathlib import Path
-from datetime import datetime
 from ui.instr.data_formatter import CsvReformator
 
 
@@ -46,50 +41,50 @@ class WeatherStorage:
     add_line = """INSERT INTO weather 
                             (data_base, city,
                             date_day, temp,
-                            prec_desc, prec_mm, 
+                            prec_desc, prec_mm,
                             wind_speed, wind_direc)
                 VALUES (%s,%s,%s,%s,%s,%s,%s,%s);"""
     basic_statistic_com = {
-        "max_temp": """SELECT MAX(temp) 
-                        FROM weather 
+        "max_temp": """SELECT MAX(temp)
+                        FROM weather
                         WHERE date_day>=%s AND date_day<=%s AND city=%s""",
-        "average_temp": """SELECT ROUND(AVG(temp)::numeric,2) 
-                        FROM weather 
+        "average_temp": """SELECT ROUND(AVG(temp)::numeric,2)
+                        FROM weather
                         WHERE date_day>=%s AND date_day<=%s AND city=%s""",
-        "min_temp": """SELECT MIN(temp) 
-                        FROM weather 
+        "min_temp": """SELECT MIN(temp)
+                        FROM weather
                         WHERE date_day>=%s AND date_day<=%s AND city=%s""",
         "prec": """SELECT COUNT(*)
                         FROM weather
-                        WHERE date_day>=%s AND date_day<=%s 
+                        WHERE date_day>=%s AND date_day<=%s
                                 AND city=%s AND prec_mm>0
                         """,
         "no_prec": """SELECT COUNT(*)
                         FROM weather
-                        WHERE date_day>=%s AND date_day<=%s 
+                        WHERE date_day>=%s AND date_day<=%s
                                 AND city=%s AND prec_mm=0""",
-        "frec_type_prec": """SELECT prec_desc 
-                        FROM weather 
+        "frec_type_prec": """SELECT prec_desc
+                        FROM weather
                         WHERE date_day>=%s AND date_day<=%s AND city=%s
                                 AND prec_desc!=' '
-                        GROUP BY prec_desc 
+                        GROUP BY prec_desc
                         ORDER BY COUNT(*) DESC LIMIT 2""",
         "wind_speed": """SELECT ROUND(AVG(wind_speed)::numeric,2)
-                        FROM weather 
+                        FROM weather
                         WHERE date_day>=%s AND date_day<=%s AND city=%s""",
-        "wind_direction": """SELECT wind_direc 
+        "wind_direction": """SELECT wind_direc
                         FROM weather
                         WHERE date_day>=%s AND date_day<=%s AND city=%s
                                 AND wind_direc!=''
-                        GROUP BY wind_direc 
+                        GROUP BY wind_direc
                         ORDER BY COUNT(*) DESC LIMIT 2""",
     }
     more_2_year_statistic_com = {
         "temp_by_years": """
-                                SELECT extract(year FROM date_day), 
-                                        MAX(temp), 
+                                SELECT extract(year FROM date_day),
+                                        MAX(temp),
                                         MIN(temp)
-                                FROM weather 
+                                FROM weather
                                 WHERE date_day>=%s AND date_day<=%s AND city=%s
                                 GROUP BY extract(year FROM date_day)
                                 ORDER BY extract(year FROM date_day)"""

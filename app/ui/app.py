@@ -1,7 +1,4 @@
-import json
-import os
-from datetime import datetime
-from flask import Flask, request, render_template
+from flask import Flask
 from ui.views import pages, BASE_DATE, DOWNLOAD_CONFIG, DB_CONFIG
 from ui.instr.db_updater import DataUpdater
 

@@ -1,5 +1,4 @@
 import csv
-import json
 from datetime import datetime, timedelta
 
 
@@ -9,15 +8,35 @@ class CsvReformator:
         self.city = city
 
     def reformat_data(self, raw_line):
+
+        date_day = str_to_datetime(raw_line[0].split(" ")[0]).date()
+        temp = float(raw_line[1]) if raw_line[1] else 0
+        prec_desc = raw_line[11] if raw_line[11] else "No data"
+
+        try:
+            prec_mm = (
+                float(raw_line[23])
+                if (raw_line[23] or raw_line[23].lower() != "осадков нет")
+                else 0
+            )
+        except ValueError:
+            prec_mm = 0
+
+        try:
+            wind_speed = int(raw_line[7])
+        except ValueError:
+            wind_speed = 0
+
+        wind_direc = raw_line[6]
         data = (
             "rp5",
             self.city,
-            datetime.strptime(raw_line[0].split(" ")[0], "%d.%m.%Y").date(),
-            float(raw_line[1]) if len(raw_line[1]) >= 3 else 0,
-            raw_line[11] if raw_line[11] else "No data",
-            float(raw_line[23]) if 7 > len(raw_line[23]) >= 3 else 0,
-            raw_line[7] if 5 > len(raw_line[7]) >= 3 else 0,
-            raw_line[6],
+            date_day,
+            temp,
+            prec_desc,
+            prec_mm,
+            wind_speed,
+            wind_direc,
         )
         return data
 
@@ -26,7 +45,7 @@ class CsvReformator:
             reader = csv.reader(dataset, delimiter=";")
             n = 1
             for row in reader:
-                if (n < 8):
+                if n < 8:
                     n += 1
                     continue
                 yield self.reformat_data(row)
@@ -57,5 +76,9 @@ def form_query_data(input_data=None):
             str_to_datetime(input_data["end_date"]),
         ]
     else:
-        query_data = ["Irkutsk", datetime.now().date() - timedelta(days=7), datetime.now().date()]
+        query_data = [
+            "Irkutsk",
+            datetime.now().date() - timedelta(days=7),
+            datetime.now().date(),
+        ]
     return query_data

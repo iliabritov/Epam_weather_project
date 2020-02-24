@@ -1,5 +1,3 @@
-import json
-import os
 from pathlib import Path
 from datetime import datetime
 
@@ -15,7 +13,7 @@ DB_CONFIG = Path("./configs/db_config.ini")
 DOWNLOAD_CONFIG = Path("./configs/download.ini")
 BASE_DATE = datetime(2019, 1, 1)
 
-WEATHER_STORAGE = WeatherStatistics(DB_CONFIG, "weather_db") 
+WEATHER_STORAGE = WeatherStatistics(DB_CONFIG, "weather_db")
 
 
 @pages.route("/", methods=["GET"])
