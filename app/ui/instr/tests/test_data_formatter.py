@@ -46,14 +46,14 @@ def test_datetime_to_str(datetime_obj, expecter_result):
 @pytest.fixture(scope="function")
 def responce_data():
     input_data = [
-        {"start_date": "10.10.2000", "end_date": "15.03.2009", "city_name": "Samara"},
-        {"start_date": "15.04.2010", "end_date": "24.12.2019", "city_name": "Berlin"},
+        {"city_name": "Samara", "start_date": "10.10.2000", "end_date": "15.03.2009"},
+        {"city_name": "Berlin", "start_date": "15.04.2010", "end_date": "24.12.2019"},
         None,
     ]
     exp_result = [
-        [datetime(2000, 10, 10), datetime(2009, 3, 15), "Samara"],
-        [datetime(2010, 4, 15), datetime(2019, 12, 24), "Berlin"],
-        [datetime.now().date() - timedelta(days=7), datetime.now().date(), "Irkutsk"],
+        ["Samara", datetime(2000, 10, 10), datetime(2009, 3, 15)],
+        ["Berlin", datetime(2010, 4, 15), datetime(2019, 12, 24)],
+        ["Irkutsk", datetime.now().date() - timedelta(days=7), datetime.now().date()],
     ]
     return zip(input_data, exp_result)
 
@@ -78,7 +78,7 @@ def csv_test_file():
                 -1.0,
                 " ",
                 0,
-                0,
+                2,
                 "Ветер, дующий с запада",
             )
 

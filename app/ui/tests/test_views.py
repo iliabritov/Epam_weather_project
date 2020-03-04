@@ -14,4 +14,4 @@ def test_correct_status_code(client, route, expected_result):
 
 @pytest.mark.parametrize("route", ["/", "home"])
 def test_correct_content_type(client, route):
-    assert client.get(route).content_type == "text/html"
+    assert client.get(route).content_type == "text/html; charset=utf-8"

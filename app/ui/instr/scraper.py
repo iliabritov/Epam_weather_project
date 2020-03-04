@@ -50,27 +50,28 @@ class LoaderRp5:
         r = self._session.post(
             self.source_url, data=form_data, headers=self.headers
         ).text
-        link = r[r.find("href=") + 5 : r.find(">Download")].replace("../", "")
+        link = r[r.find("href=") + 5: r.find(">Download")].replace("../", "")
         dataset = gzip.GzipFile(fileobj=BytesIO(requests.get(link).content))
         with open(file_path, "wb") as csv_f:
             csv_f.write(dataset.read())
 
+    @staticmethod
+    def _make_folder_if_not_exists(folder):
+        if not folder.exists():
+            folder.mkdir()
+
     def load_weather_datasets(self, start_date=None, end_date=None):
-        if not self.out_folder.exists():
-            self.out_folder.mkdir()
+        self._make_folder_if_not_exists(self.out_folder)
 
         datasets_folder = self.out_folder / self.data_folder
-        if not datasets_folder.exists():
-            datasets_folder.mkdir()
+        self._make_folder_if_not_exists(datasets_folder)
 
         start_date = start_date or self.start_date
         end_date = end_date or self.end_date
 
         for city_name in self.cities:
             out_city_folder = datasets_folder / Path(city_name)
-
-            if not out_city_folder.exists():
-                out_city_folder.mkdir()
+            self._make_folder_if_not_exists(out_city_folder)
 
             for year in range(start_date.year, end_date.year + 1):
                 dataset_out_path = out_city_folder / Path(f"{year}.csv")
